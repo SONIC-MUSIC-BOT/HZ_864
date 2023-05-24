@@ -52,7 +52,7 @@ def start_pannel(_, BOT_USERNAME, OWNER: Union[bool, int] = None):
                     )
                 ]
             )
-            buttons.append(
+    buttons.append(
         [InlineKeyboardButton(text=f"{YAFA_NAME}", url=f"{YAFA_CHANNEL}")] 
     )
     return buttons
