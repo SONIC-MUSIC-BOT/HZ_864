@@ -119,15 +119,5 @@ def private_help_panel(_):
                 text=f"{YAFA_NAME}", url=f"{YAFA_CHANNEL}",
             )
         ],
-        [
-            InlineKeyboardButton(
-                text=f"حسين مطور السورس ⚡⁩", url=f"https://t.me/Huseenytiq"), 
-            )
-        ],
-        [
-            InlineKeyboardButton(
-                text=f"مساعدة مطور السورس ⚡⁩", url=f"https://t.me/MZ_864"), 
-            )
-        ],
     ]
     return buttons
