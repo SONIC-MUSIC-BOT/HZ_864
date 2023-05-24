@@ -124,7 +124,7 @@ async def gen_thumb(videoid, user_id):
         para = textwrap.wrap(title, width=32)
         try:
             draw.text(
-                (450, 25),
+                (455, 25),
                 f"SONIC SOURCE",
                 fill="white",
                 stroke_width=3,
