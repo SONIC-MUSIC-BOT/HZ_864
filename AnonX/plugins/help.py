@@ -105,7 +105,7 @@ async def helper_private(
 )
 @LanguageStart
 async def help_com_group(client, message: Message, _):
-  if not await check_is_joined(message):
+    if not await check_is_joined(message):
         return
     keyboard = private_help_panel(_)
     await message.reply_photo(
