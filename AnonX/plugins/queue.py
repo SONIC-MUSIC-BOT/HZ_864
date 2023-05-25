@@ -4,10 +4,10 @@ from random import randint
 
 from pyrogram import filters
 from pyrogram.errors import FloodWait
-from pyrogram.types import CallbackQuery, InputMediaPhoto, Message
+from pyrogram.types import CallbackQuery, InputMediaPhoto, Message, InlineKeyboardMarkup, InlineKeyboardButton
 
 import config
-from config import BANNED_USERS
+from config import BANNED_USERS, YAFA_CHANNEL, YAFA_NAME
 from strings import get_command
 from strings.filters import command
 from AnonX import app
@@ -18,6 +18,25 @@ from AnonX.utils.database import (get_cmode, is_active_chat,
                                        is_music_playing)
 from AnonX.utils.decorators.language import language, languageCB
 from AnonX.utils.inline import queue_back_markup, queue_markup
+
+
+force_btn = InlineKeyboardMarkup(
+    [
+        [
+            InlineKeyboardButton(   
+              text=f"{YAFA_NAME}", url=f"{YAFA_CHANNEL}",)                        
+        ],        
+    ]
+) 
+async def check_is_joined(message):    
+    try:
+        userid = message.from_user.id
+        status = await app.get_chat_member(f"{CHANNEL_SUDO}", userid)
+        return True
+    except Exception:
+        await message.reply_text("**⌔︙  عليك الاشتراك في قناة البوت اولاً :**",reply_markup=force_btn,parse_mode="markdown",disable_web_page_preview=False)
+        return False
+
 
 ###Commands
 QUEUE_COMMAND = get_command("QUEUE_COMMAND")
@@ -53,6 +72,8 @@ def get_duration(playing):
 )
 @language
 async def ping_com(client, message: Message, _):
+    if not await check_is_joined(message):
+        return
     if message.command[0][0] == "c":
         chat_id = await get_cmode(message.chat.id)
         if chat_id is None:
