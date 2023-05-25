@@ -1,13 +1,32 @@
 from pyrogram import filters
-from pyrogram.types import Message
+from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 
-from config import BANNED_USERS
+from config import BANNED_USERS, YAFA_CHANNEL, YAFA_NAME
 from strings import get_command
 from strings.filters import command
 from AnonX import app
 from AnonX.utils.database.memorydatabase import (get_loop,
                                                       set_loop)
 from AnonX.utils.decorators import AdminRightsCheck
+
+
+force_btn = InlineKeyboardMarkup(
+    [
+        [
+            InlineKeyboardButton(   
+              text=f"{YAFA_NAME}", url=f"{YAFA_CHANNEL}",)                        
+        ],        
+    ]
+) 
+async def check_is_joined(message):    
+    try:
+        userid = message.from_user.id
+        status = await app.get_chat_member(f"{CHANNEL_SUDO}", userid)
+        return True
+    except Exception:
+        await message.reply_text("**⌔︙  عليك الاشتراك في قناة البوت اولاً :**",reply_markup=force_btn,parse_mode="markdown",disable_web_page_preview=False)
+        return False
+
 
 # Commands
 LOOP_COMMAND = get_command("LOOP_COMMAND")
@@ -27,6 +46,8 @@ LOOP_COMMAND = get_command("LOOP_COMMAND")
 )
 @AdminRightsCheck
 async def admins(cli, message: Message, _, chat_id):
+    if not await check_is_joined(message):
+        return
     usage = _["admin_24"]
     if len(message.command) != 2:
         return await message.reply_text(usage)
