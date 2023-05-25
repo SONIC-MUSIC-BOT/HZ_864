@@ -72,8 +72,6 @@ def get_duration(playing):
 )
 @language
 async def ping_com(client, message: Message, _):
-    if not await check_is_joined(message):
-        return
     if message.command[0][0] == "c":
         chat_id = await get_cmode(message.chat.id)
         if chat_id is None:
