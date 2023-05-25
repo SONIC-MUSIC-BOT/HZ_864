@@ -4,7 +4,7 @@ from pyrogram.types import (CallbackQuery, InlineKeyboardButton,
                             InlineKeyboardMarkup, Message)
 
 from config import (BANNED_USERS, CLEANMODE_DELETE_MINS,
-                    MUSIC_BOT_NAME, OWNER_ID)
+                    MUSIC_BOT_NAME, OWNER_ID, YAFA_CHANNEL, YAFA_NAME) 
 from strings import get_command
 from strings.filters import command
 from AnonX import app
@@ -31,6 +31,25 @@ from AnonX.utils.inline.settings import (
     video_quality_markup)
 from AnonX.utils.inline.start import private_panel
 
+
+force_btn = InlineKeyboardMarkup(
+    [
+        [
+            InlineKeyboardButton(   
+              text=f"{YAFA_NAME}", url=f"{YAFA_CHANNEL}",)                        
+        ],        
+    ]
+) 
+async def check_is_joined(message):    
+    try:
+        userid = message.from_user.id
+        status = await app.get_chat_member(f"{CHANNEL_SUDO}", userid)
+        return True
+    except Exception:
+        await message.reply_text("**⌔︙  عليك الاشتراك في قناة البوت اولاً :**",reply_markup=force_btn,parse_mode="markdown",disable_web_page_preview=False)
+        return False
+
+
 ### Command
 SETTINGS_COMMAND = get_command("SETTINGS_COMMAND")
 
@@ -49,6 +68,8 @@ SETTINGS_COMMAND = get_command("SETTINGS_COMMAND")
 )
 @language
 async def settings_mar(client, message: Message, _):
+    if not await check_is_joined(message):
+        return
     buttons = setting_markup(_)
     await message.reply_text(
         _["setting_1"].format(message.chat.title, message.chat.id),
