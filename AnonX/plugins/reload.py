@@ -1,9 +1,9 @@
 import asyncio
 
 from pyrogram import filters
-from pyrogram.types import CallbackQuery, Message
+from pyrogram.types import CallbackQuery, Message, InlineKeyboardMarkup, InlineKeyboardButton
 
-from config import BANNED_USERS, MUSIC_BOT_NAME, adminlist, lyrical
+from config import BANNED_USERS, MUSIC_BOT_NAME, adminlist, lyrical, YAFA_CHANNEL, YAFA_NAME
 from strings import get_command
 from strings.filters import command
 from AnonX import app
@@ -13,6 +13,25 @@ from AnonX.utils.database import get_authuser_names, get_cmode
 from AnonX.utils.decorators import (ActualAdminCB, AdminActual,
                                          language)
 from AnonX.utils.formatters import alpha_to_int
+
+
+force_btn = InlineKeyboardMarkup(
+    [
+        [
+            InlineKeyboardButton(   
+              text=f"{YAFA_NAME}", url=f"{YAFA_CHANNEL}",)                        
+        ],        
+    ]
+) 
+async def check_is_joined(message):    
+    try:
+        userid = message.from_user.id
+        status = await app.get_chat_member(f"{CHANNEL_SUDO}", userid)
+        return True
+    except Exception:
+        await message.reply_text("**⌔︙  عليك الاشتراك في قناة البوت اولاً :**",reply_markup=force_btn,parse_mode="markdown",disable_web_page_preview=False)
+        return False
+
 
 ### Multi-Lang Commands
 RELOAD_COMMAND = get_command("RELOAD_COMMAND")
@@ -33,6 +52,8 @@ RESTART_COMMAND = get_command("RESTART_COMMAND")
 )
 @language
 async def reload_admin_cache(client, message: Message, _):
+    if not await check_is_joined(message):
+        return
     try:
         chat_id = message.chat.id
         admins = await app.get_chat_members(
@@ -67,6 +88,8 @@ async def reload_admin_cache(client, message: Message, _):
 )
 @AdminActual
 async def restartbot(client, message: Message, _):
+    if not await check_is_joined(message):
+        return
     mystic = await message.reply_text(
         f"ᴩʟᴇᴀsᴇ ᴡᴀɪᴛ ʀᴇʙᴏᴏᴛɪɴɢ {MUSIC_BOT_NAME} ғᴏʀ ʏᴏᴜʀ ᴄʜᴀᴛ."
     )
