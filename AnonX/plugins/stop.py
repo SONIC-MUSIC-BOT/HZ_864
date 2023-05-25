@@ -46,8 +46,6 @@ STOP_COMMAND = get_command("STOP_COMMAND")
 )
 @AdminRightsCheck
 async def stop_music(cli, message: Message, _, chat_id):
-    if not await check_is_joined(message):
-        return
     if not len(message.command) == 1:
         return await message.reply_text(_["general_2"])
     await Anon.stop_stream(chat_id)
