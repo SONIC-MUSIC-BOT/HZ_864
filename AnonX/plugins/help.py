@@ -1,10 +1,10 @@
 from typing import Union
 
 from pyrogram import filters, types
-from pyrogram.types import InlineKeyboardMarkup, Message
+from pyrogram.types import InlineKeyboardMarkup, Message, InlineKeyboardButton
 
 import config
-from config import BANNED_USERS
+from config import BANNED_USERS, YAFA_CHANNEL, YAFA_NAME
 from strings import get_command, get_string, helpers
 from strings.filters import command
 from AnonX import app
@@ -14,7 +14,25 @@ from AnonX.utils.database import get_lang, is_commanddelete_on
 from AnonX.utils.decorators.language import (LanguageStart,
                                                   languageCB)
 from AnonX.utils.inline.help import (help_back_markup,
-                                          private_help_panel)
+                                     private_help_panel)
+
+
+force_btn = InlineKeyboardMarkup(
+    [
+        [
+            InlineKeyboardButton(   
+              text=f"{YAFA_NAME}", url=f"{YAFA_CHANNEL}",)                        
+        ],        
+    ]
+) 
+async def check_is_joined(message):    
+    try:
+        userid = message.from_user.id
+        status = await app.get_chat_member(f"{CHANNEL_SUDO}", userid)
+        return True
+    except Exception:
+        await message.reply_text("**⌔︙  عليك الاشتراك في قناة البوت اولاً :**",reply_markup=force_btn,parse_mode="markdown",disable_web_page_preview=False)
+        return False
 
 ### Command
 HELP_COMMAND = get_command("HELP_COMMAND")
@@ -38,6 +56,8 @@ HELP_COMMAND = get_command("HELP_COMMAND")
 async def helper_private(
     client: app, update: Union[types.Message, types.CallbackQuery]
 ):
+    if not await check_is_joined(message):
+        return
     is_callback = isinstance(update, types.CallbackQuery)
     if is_callback:
         try:
@@ -85,6 +105,8 @@ async def helper_private(
 )
 @LanguageStart
 async def help_com_group(client, message: Message, _):
+  if not await check_is_joined(message):
+        return
     keyboard = private_help_panel(_)
     await message.reply_photo(
         photo=config.START_IMG_URL,
