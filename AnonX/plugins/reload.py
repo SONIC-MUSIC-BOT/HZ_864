@@ -52,8 +52,6 @@ RESTART_COMMAND = get_command("RESTART_COMMAND")
 )
 @language
 async def reload_admin_cache(client, message: Message, _):
-    if not await check_is_joined(message):
-        return
     try:
         chat_id = message.chat.id
         admins = await app.get_chat_members(
@@ -88,8 +86,6 @@ async def reload_admin_cache(client, message: Message, _):
 )
 @AdminActual
 async def restartbot(client, message: Message, _):
-    if not await check_is_joined(message):
-        return
     mystic = await message.reply_text(
         f"ᴩʟᴇᴀsᴇ ᴡᴀɪᴛ ʀᴇʙᴏᴏᴛɪɴɢ {MUSIC_BOT_NAME} ғᴏʀ ʏᴏᴜʀ ᴄʜᴀᴛ."
     )
