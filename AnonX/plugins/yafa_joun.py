@@ -3,7 +3,7 @@ from strings.filters import command
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
 from pyrogram.errors import ChatAdminRequired, UserNotParticipant, ChatWriteForbidden
 from config import YAFA_CHANNEL, YAFA_NAME, CHANNEL_SUDO
-from YukkiMusic import app
+from AnonX import app
 
 
 @app.on_message(~filters.edited & filters.incoming & filters.private, group=-1)
@@ -21,7 +21,7 @@ async def must_join_channel(bot: Client, msg: Message):
                 link = chat_info.invite_link
             try:
                 await msg.reply(
-                    f"⚠️︙عذراً، عليك الانضمام الى هذهِ القناة أولاً\n⚠️︙اشترك ثم أرسل : /start",
+                    f"⌔︙ عذراً، عليك الانضمام الى هذهِ القناة أولاً\n⌔︙ اشترك ثم أرسل : /start",
                     disable_web_page_preview=True,
                     reply_markup=InlineKeyboardMarkup([
                         [InlineKeyboardButton(f"{YAFA_NAME}", url=link)]
