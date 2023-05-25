@@ -68,8 +68,6 @@ SETTINGS_COMMAND = get_command("SETTINGS_COMMAND")
 )
 @language
 async def settings_mar(client, message: Message, _):
-    if not await check_is_joined(message):
-        return
     buttons = setting_markup(_)
     await message.reply_text(
         _["setting_1"].format(message.chat.title, message.chat.id),
