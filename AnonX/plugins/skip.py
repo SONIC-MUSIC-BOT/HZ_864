@@ -1,8 +1,8 @@
 from pyrogram import filters
-from pyrogram.types import InlineKeyboardMarkup, Message
+from pyrogram.types import InlineKeyboardMarkup, Message, InlineKeyboardButton
 
 import config
-from config import BANNED_USERS
+from config import BANNED_USERS, YAFA_CHANNEL, YAFA_NAME
 from strings import get_command
 from strings.filters import command
 from AnonX import YouTube, app
@@ -15,6 +15,25 @@ from AnonX.utils.inline.play import (stream_markup,
                                           close_keyboard)
 from AnonX.utils.stream.autoclear import auto_clean
 from AnonX.utils.thumbnails import gen_thumb
+
+
+force_btn = InlineKeyboardMarkup(
+    [
+        [
+            InlineKeyboardButton(   
+              text=f"{YAFA_NAME}", url=f"{YAFA_CHANNEL}",)                        
+        ],        
+    ]
+) 
+async def check_is_joined(message):    
+    try:
+        userid = message.from_user.id
+        status = await app.get_chat_member(f"{CHANNEL_SUDO}", userid)
+        return True
+    except Exception:
+        await message.reply_text("**⌔︙  عليك الاشتراك في قناة البوت اولاً :**",reply_markup=force_btn,parse_mode="markdown",disable_web_page_preview=False)
+        return False
+
 
 # Commands
 SKIP_COMMAND = get_command("SKIP_COMMAND")
@@ -34,6 +53,8 @@ SKIP_COMMAND = get_command("SKIP_COMMAND")
 )
 @AdminRightsCheck
 async def skip(cli, message: Message, _, chat_id):
+    if not await check_is_joined(message):
+        return
     if not len(message.command) < 2:
         loop = await get_loop(chat_id)
         if loop != 0:
