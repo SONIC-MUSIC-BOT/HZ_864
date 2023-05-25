@@ -56,8 +56,6 @@ HELP_COMMAND = get_command("HELP_COMMAND")
 async def helper_private(
     client: app, update: Union[types.Message, types.CallbackQuery]
 ):
-    if not await check_is_joined(message):
-        return
     is_callback = isinstance(update, types.CallbackQuery)
     if is_callback:
         try:
@@ -105,8 +103,6 @@ async def helper_private(
 )
 @LanguageStart
 async def help_com_group(client, message: Message, _):
-    if not await check_is_joined(message):
-        return
     keyboard = private_help_panel(_)
     await message.reply_photo(
         photo=config.START_IMG_URL,
