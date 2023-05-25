@@ -46,8 +46,6 @@ LOOP_COMMAND = get_command("LOOP_COMMAND")
 )
 @AdminRightsCheck
 async def admins(cli, message: Message, _, chat_id):
-    if not await check_is_joined(message):
-        return
     usage = _["admin_24"]
     if len(message.command) != 2:
         return await message.reply_text(usage)
