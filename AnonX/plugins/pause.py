@@ -47,8 +47,6 @@ PAUSE_COMMAND = get_command("PAUSE_COMMAND")
 )
 @AdminRightsCheck
 async def pause_admin(cli, message: Message, _, chat_id):
-    if not await check_is_joined(message):
-        return
     if not len(message.command) == 1:
         return await message.reply_text(_["general_2"])
     if not await is_music_playing(chat_id):
