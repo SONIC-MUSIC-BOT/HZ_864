@@ -9,13 +9,32 @@ from pyrogram.types import (InlineKeyboardButton,
                             InputMediaVideo, Message)
 
 from config import (BANNED_USERS, SONG_DOWNLOAD_DURATION,
-                    SONG_DOWNLOAD_DURATION_LIMIT)
+                    SONG_DOWNLOAD_DURATION_LIMIT, YAFA_CHANNEL, YAFA_NAME) 
 from strings import get_command
 from strings.filters import command
 from AnonX import YouTube, app
 from AnonX.utils.decorators.language import language, languageCB
 from AnonX.utils.formatters import convert_bytes
 from AnonX.utils.inline.song import song_markup
+
+
+force_btn = InlineKeyboardMarkup(
+    [
+        [
+            InlineKeyboardButton(   
+              text=f"{YAFA_NAME}", url=f"{YAFA_CHANNEL}",)                        
+        ],        
+    ]
+) 
+async def check_is_joined(message):    
+    try:
+        userid = message.from_user.id
+        status = await app.get_chat_member(f"{CHANNEL_SUDO}", userid)
+        return True
+    except Exception:
+        await message.reply_text("**⌔︙  عليك الاشتراك في قناة البوت اولاً :**",reply_markup=force_btn,parse_mode="markdown",disable_web_page_preview=False)
+        return False
+
 
 # Command
 SONG_COMMAND = get_command("SONG_COMMAND")
@@ -34,6 +53,8 @@ SONG_COMMAND = get_command("SONG_COMMAND")
 )
 @language
 async def song_commad_group(client, message: Message, _):
+    if not await check_is_joined(message):
+        return
     upl = InlineKeyboardMarkup(
         [
             [
@@ -64,6 +85,8 @@ async def song_commad_group(client, message: Message, _):
 )
 @language
 async def song_commad_private(client, message: Message, _):
+    if not await check_is_joined(message):
+        return
     await message.delete()
     url = await YouTube.url(message)
     if url:
