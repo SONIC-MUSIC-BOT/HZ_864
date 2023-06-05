@@ -55,9 +55,6 @@ async def huhh(client: Client, message: Message):
 @app.on_message(
    command(["المطور","مطور","المبرمج","مطور السورس","حسين صلاح"])
 )
-
-@app.on_edited_message(command(["المطور","مطور","المبرمج","مطور السورس","حسين صلاح"])
-)
 async def zohary(client: Client, message: Message):
   usr = await app.get_users(5301059909)
   user = await client.get_chat(5301059909)
@@ -87,8 +84,6 @@ reply_markup=InlineKeyboardMarkup(
     await app.send_message(5301059909, f"⌔︙عزيزي المطور {zoharyus}\n\n⌔︙  {message.from_user.mention} بحاجه اليك \n\n⌔︙ ايديه : {sender_id} \n\n⌔︙ اسمه : {sender_name} \n\n⌔︙ رابط الرساله : {message_link} \n\n⌔︙ رابط المجموعه : {invitelink}")
 @app.on_message(
     command(["المطور2","مساعدة مطور السورس","أولسنا على الحق","المطوره","مطور2","العلويه","العلوية"])
-)
-@app.on_edited_message(command(["المطور2","مساعدة مطور السورس","أولسنا على الحق","المطوره","مطور2","العلويه","العلوية"])
 )
 async def zohary(client: Client, message: Message):
   usr = await app.get_users(208837121)
