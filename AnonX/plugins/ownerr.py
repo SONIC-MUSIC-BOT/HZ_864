@@ -84,7 +84,7 @@ async def huhh(client: Client, message: Message):
 
 
 @app.on_message(
-    command(["حسين صلاح","مالك السورس","حسين مطور السورس","مبرمج","مطور السورس","المبرمج","المطور الاساسي"])
+    command(["حسين صلاح","مالك السورس","حسين مطور السورس","مطور","المطور","مبرمج","مطور السورس","المبرمج","المطور الاساسي"])
     & ~filters.edited
 )
 async def yas(client, message):
@@ -105,7 +105,7 @@ async def yas(client, message):
 
 
 @app.on_message(
-    command(["المطورة","المطوره","أولسنا على الحق","العلوية","مساعده مطور السورس","مساعدة مطور السورس","العلويه","مساعدة المطور الاساسي"])
+    command(["المطورة","المطوره","أولسنا على الحق","العلوية","مساعده مطور السورس","مساعدة مطور السورس","المطور2","مطور2","العلويه","مساعدة المطور الاساسي"])
     & ~filters.edited
 )
 async def yas(client, message):
@@ -123,23 +123,4 @@ async def yas(client, message):
         ),
     )
 
-
-@app.on_message(
-    command(["مناره القانتين","مناره","منارة القانتين","منارة","مطور","المطور "])
-    & ~filters.edited
-)
-async def yas(client, message):
-    usr = await client.get_chat("manaratalqanitin")
-    name = usr.first_name
-    photo = await app.download_media(usr.photo.big_file_id)
-    await message.reply_photo(photo,       caption=f"**⌔︙ معلومات المطور\n\n⌔︙الاسم : {name}\n⌔︙المعرف : @{usr.username}\n⌔︙الايدي : `{usr.id}`\n⌔︙البايو : {usr.bio}**",  
-    reply_markup=InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton(
-                        name, url=f"https://t.me/{usr.username}")
-                ],
-            ]
-        ),
-    )
 
