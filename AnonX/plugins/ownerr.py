@@ -40,7 +40,7 @@ def get_file_id(msg: Message):
 
             
 @app.on_message(
-    command(["سورس سونك","سورس","السورس","سونك سورس", "source"])
+    command(["سورس سونك","سورسي","سورس","السورس","سونك سورس", "source"])
 )
 async def huhh(client: Client, message: Message):
     await message.reply_photo(
@@ -50,11 +50,11 @@ async def huhh(client: Client, message: Message):
 
 ⌔︙[سورس سونك](https://t.me/SONIC_source)
 
-⌔︙[حسين مطور السورس](https://t.me/Huseenytiq)
+⌔︙[مطور السورس](https://t.me/Huseenytiq)
 
 ⌔︙[مساعدة مطور السورس](https://t.me/MZ_864)
 
-⌔︙[بوت تواصل السورس](https://t.me/Huseenytiq_bot)
+⌔︙[بوت التواصل](https://t.me/Huseenytiq_bot)
 
 ⌔︙[مجموعة الدعم](https://t.me/SONIC_source_SUPPORT)
 
@@ -105,7 +105,7 @@ async def yas(client, message):
 
 
 @app.on_message(
-    command(["المطورة","المطوره","أولسنا على الحق","العلوية","مساعده مطور السورس","مساعدة مطور السورس","المطور2","مطور2","العلويه","مساعدة المطور الاساسي"])
+    command(["المطورة","المطوره","أولسنا على الحق","العلوية","مساعده مطور السورس","مساعدة مطور السورس","المطور2","مطور2","العلويه","المطور الاساسي","المبرمج","مطور السورس","مبرمج","مطور","المطور","مالك السورس","مساعدة المطور الاساسي"])
     & ~filters.edited
 )
 async def yas(client, message):
